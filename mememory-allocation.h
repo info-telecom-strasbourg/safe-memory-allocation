@@ -16,4 +16,13 @@ void **__TAB_MEM = NULL;
         __TAB_MEM[__SIZE-1]; \
 })
 
+#define _free() \
+({ \
+        for (unsigned long long i = 0; i < __SIZE; i++) \
+        { \
+                free(__TAB_MEM[i]); \
+        } \
+        free (__TAB_MEM); \
+})
+
 #endif
