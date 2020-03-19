@@ -16,6 +16,16 @@ void **__TAB_MEM = NULL;
         __TAB_MEM[__SIZE-1]; \
 })
 
+
+#define _malloc(a) \
+({ \
+        __SIZE+=1; \
+        ACHECK(__TAB_MEM = realloc(__TAB_MEM, __SIZE * sizeof(void*))); \
+        ACHECK(__TAB_MEM[__SIZE-1] = malloc(a)); \
+	printf("%p\n", __TAB_MEM[__SIZE-1]);\
+        __TAB_MEM[__SIZE-1]; \
+})
+
 #define _free() \
 ({ \
         for (unsigned long long i = 0; i < __SIZE; i++) \
